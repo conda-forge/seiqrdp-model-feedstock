@@ -6,20 +6,20 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/s/seiqrdp-model/seiqrdp_model-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/s/seiqrdp-model/seiqrdp_model-{{ version }}.tar.gz
   sha256: 8ccdeee2351f79e787ef8e0ec2d88b24ecedfc37767214a1383a38e2fcbdd0f6
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - colorama
     - matplotlib-base
     - numpy
@@ -28,6 +28,8 @@ requirements:
     - scipy
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - seiqrdp_model
     - seiqrdp_model.SEIR_Solver
